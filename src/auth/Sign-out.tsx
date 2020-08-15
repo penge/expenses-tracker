@@ -1,12 +1,12 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 
-function Logout() {
+function Signout() {
   // Remove email from localStorage
   localStorage.removeItem("email");
 
-  // Redirect to /login
-  return (<Redirect to="/login" />);
+  // Redirect to /sign-in
+  return (<Redirect to="/sign-in" />);
 }
 
-export default Logout;
+export default Signout;

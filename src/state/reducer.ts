@@ -33,14 +33,11 @@ const reducer = (state: State, action: Action): State => {
 
   switch (action.type) {
 
-  case "login":
+  case "setUser":
     return {
       ...state,
       email: action.payload as string,
     };
-
-  case "logout":
-    return {};
 
   case "loading":
     return {

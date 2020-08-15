@@ -12,9 +12,10 @@ import { StateProvider } from "./state/StateProvider";
 import PrivateRoute from "./routes/PrivateRoute";
 
 import App from "./App";
-import Login from "./auth/Login";
-import Logout from "./auth/Logout";
-import Register from "./auth/Register";
+
+import SignIn from "./auth/Sign-in";
+import SignOut from "./auth/Sign-out";
+import SignUp from "./auth/Sign-up";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -25,9 +26,9 @@ ReactDOM.render(
           <PrivateRoute exact path="/" component={App} />
 
           {/* Public routes */}
-          <Route exact path="/login" component={Login} />         {/* could be also signin */}
-          <Route exact path="/logout" component={Logout} />
-          <Route exact path="/register" component={Register} />   {/* could be also signup */}
+          <Route exact path="/sign-in" component={SignIn} />
+          <Route exact path="/sign-out" component={SignOut} />
+          <Route exact path="/sign-up" component={SignUp} />
         </Switch>
       </BrowserRouter>
     </StateProvider>

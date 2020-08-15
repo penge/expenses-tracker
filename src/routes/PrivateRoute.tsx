@@ -14,7 +14,7 @@ const PrivateRoute: React.FC<{
     email.indexOf("@") > 0;
 
   return isAuthenticated ? (<Route path={props.path} exact={props.exact} component={props.component} />) :
-    (<Redirect to={{ pathname: "/login", state: { from: props.path }}} />); // not authenticated
+    (<Redirect to={{ pathname: "/sign-in", state: { from: props.path }}} />); // not authenticated
 };
 
 export default PrivateRoute;
