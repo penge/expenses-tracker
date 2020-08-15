@@ -26,6 +26,9 @@ export const AppContext = createContext<Provided>({
 const StateProvider = ({ children }: StateProviderProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  // Display a spinning wheel if there's a loading in progress.
+  document.body.classList.toggle("loading", state?.loading === true);
+
   return (
     <AppContext.Provider value={{ state, dispatch }}>
       {children}
