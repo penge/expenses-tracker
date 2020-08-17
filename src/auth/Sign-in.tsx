@@ -17,6 +17,7 @@ import {
   useLocation,
   useHistory,
 } from "react-router-dom";
+import { ActionType } from "../state/reducer";
 
 interface LocationState {
   from: string;
@@ -62,7 +63,7 @@ function Signin() {
 
     // Start the loading spinner
     dispatch({
-      type: "loading",
+      type: ActionType.Loading,
       payload: true
     });
 
@@ -71,7 +72,7 @@ function Signin() {
 
     // Stop the loading spinner
     dispatch({
-      type: "loading",
+      type: ActionType.Loading,
       payload: false
     });
 
@@ -82,7 +83,7 @@ function Signin() {
 
     // User is authenticated
     dispatch({
-      type: "setUser",
+      type: ActionType.SetUser,
       payload: email
     });
 

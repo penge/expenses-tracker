@@ -16,6 +16,7 @@ import Link from "@material-ui/core/Link";
 import PersonIcon from "@material-ui/icons/Person";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
+import { ActionType } from "../state/reducer";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,7 +56,7 @@ function Signup() {
 
     // Start the loading spinner
     dispatch({
-      type: "loading",
+      type: ActionType.Loading,
       payload: true
     });
 
@@ -63,7 +64,7 @@ function Signup() {
 
     // Stop the loading spinner
     dispatch({
-      type: "loading",
+      type: ActionType.Loading,
       payload: false
     });
 
@@ -77,7 +78,7 @@ function Signup() {
 
     // User is registered
     dispatch({
-      type: "setUser",
+      type: ActionType.SetUser,
       payload: email
     });
 

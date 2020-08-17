@@ -23,9 +23,22 @@ export interface State {
   incomes: Flow[];
 }
 
+export enum ActionType {
+  SetUser,
+  Loading,
+
+  AddCategory,
+  AddIncome,
+  AddExpense,
+
+  SetCategories,
+  SetExpenses,
+  SetIncomes
+}
+
 export interface Action {
-  type: string
-  payload: string | boolean | string[] | Flow[]
+  type: ActionType
+  payload: string | boolean | string[] | Flow | Flow[]
 }
 
 const reducer = (state: State, action: Action): State => {
@@ -33,19 +46,19 @@ const reducer = (state: State, action: Action): State => {
 
   switch (action.type) {
 
-  case "setUser":
+  case ActionType.SetUser:
     return {
       ...state,
       email: action.payload as string,
     };
 
-  case "loading":
+  case ActionType.Loading:
     return {
       ...state,
       loading: action.payload as boolean,
     };
 
-  case "addCategory":
+  case ActionType.AddCategory:
     return {
       ...state,
       categories: [
@@ -54,19 +67,37 @@ const reducer = (state: State, action: Action): State => {
       ],
     };
 
-  case "setCategories":
+  case ActionType.AddIncome:
+    return {
+      ...state,
+      incomes: [
+        ...state.incomes,
+        action.payload as Flow
+      ],
+    };
+
+  case ActionType.AddExpense:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        action.payload as Flow
+      ],
+    };
+
+  case ActionType.SetCategories:
     return {
       ...state,
       categories: action.payload as string[],
     };
 
-  case "setExpenses":
+  case ActionType.SetExpenses:
     return {
       ...state,
       expenses: action.payload as Flow[],
     };
 
-  case "setIncomes":
+  case ActionType.SetIncomes:
     return {
       ...state,
       incomes: action.payload as Flow[],
