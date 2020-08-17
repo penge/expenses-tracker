@@ -26,10 +26,10 @@ const useStyles = makeStyles((theme) => ({
 // Maps expenses and incomes for table
 const mapFlowFactory = (type: FlowType) => (flow: Flow, index: number) => ({
   id: `${type}-${index}`, // add id
-  ...flow,
+  ...flow, // includes also "date"
   type, // add type (Income or Expense)
   sign: type === FlowType.Income ? "+" : "-",
-  date: formatDate(flow.date), // format Date to a string
+  dateString: formatDate(flow.date), // format Date to a string
 });
 
 export default function ExpensesIncomes() {
@@ -66,7 +66,7 @@ export default function ExpensesIncomes() {
           <TableBody>
             {rows.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.date}</TableCell>
+                <TableCell>{row.dateString}</TableCell>
                 <TableCell>{row.category}</TableCell>
                 <TableCell>{row.info}</TableCell>
                 <TableCell align="right" className={classes[row.type]}>{row.sign}{formatCurrency(row.value)}</TableCell>

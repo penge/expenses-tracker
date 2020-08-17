@@ -1,5 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { AppContext } from "./state/StateProvider";
+import { ActionType } from "./state/reducer";
+import api from "./api";
 import { dispatchDummyData } from "./api/dummy";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -77,6 +79,20 @@ function App() {
     if (location.search === "?dummy") {
       dispatchDummyData(dispatch);
       return;
+    }
+
+    const {
+      email,
+      categories,
+      expenses,
+      incomes,
+    } = api.load();
+
+    if (email) {
+      dispatch({ type: ActionType.SetUser, payload: email });
+      dispatch({ type: ActionType.SetCategories, payload: categories });
+      dispatch({ type: ActionType.SetExpenses, payload: expenses });
+      dispatch({ type: ActionType.SetIncomes, payload: incomes });
     }
   }, [dispatch, location.search]);
 

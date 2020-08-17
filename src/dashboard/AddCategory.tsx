@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../state/StateProvider";
+import { ActionType } from "../state/reducer";
+import api from "../api";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
@@ -15,12 +18,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AddCategory() {
+  const { state, dispatch } = useContext(AppContext);
+  const { email, categories } = state;
+
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
 
   // Open/Close modal
   const handleClickOpen = () => { setOpen(true); };
   const handleClose = () => { setName(""); setOpen(false); };
+
+  // Add new Category
+  const handleAdd = () => {
+    if (categories.includes(name)) {
+      return;
+    }
+
+    const success = api.addCategory(email, name);
+    if (!success) {
+      return;
+    }
+
+    dispatch({
+      type: ActionType.AddCategory,
+      payload: name
+    });
+
+    handleClose();
+  };
 
   // Change of Value
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +78,7 @@ export default function AddCategory() {
 
         <DialogActions>
           <Button onClick={handleClose} color="primary">Cancel</Button>
-          <Button onClick={handleClose} color="primary">Add</Button>
+          <Button onClick={handleAdd} color="primary">Add</Button>
         </DialogActions>
       </Dialog>
     </>

@@ -1,5 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AppContext } from "../../state/StateProvider";
+import { FlowType, ActionType } from "../../state/reducer";
+import api from "../../api";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
@@ -17,7 +19,6 @@ import Typography from "@material-ui/core/Typography";
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
-import { FlowType } from "../../state/reducer";
 
 const useStyles = makeStyles((theme) => ({
   padded: {
@@ -30,12 +31,12 @@ const useStyles = makeStyles((theme) => ({
 
 interface Props {
   flowType: FlowType;
-  buttonColor: "primary" | "secondary"
+  buttonColor: "primary" | "secondary";
 }
 
 export default function AddFlow({ flowType, buttonColor }: Props) {
-  const { state } = useContext(AppContext);
-  const { categories } = state;
+  const { state, dispatch } = useContext(AppContext);
+  const { email, categories } = state;
 
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | null>(new Date());
@@ -52,6 +53,44 @@ export default function AddFlow({ flowType, buttonColor }: Props) {
     setCategory("");
     setInfo("");
     setValue("");
+  };
+
+  // Add new Flow (Income or Expense)
+  const handleDialogAdd = () => {
+    const flow = {
+      category,
+      date: date || new Date(),
+      info,
+      value: parseFloat(value),
+    };
+
+    if (Number.isNaN(flow.value) || !flow.date) {
+      return;
+    }
+
+    // Set dates, minutes, seconds (for better sorting)
+    const now = new Date();
+    flow.date.setHours(now.getHours());
+    flow.date.setMinutes(now.getMinutes());
+    flow.date.setSeconds(now.getSeconds());
+
+    const success = api.addFlow(email, flowType, flow);
+    if (!success) {
+      return;
+    }
+
+    let actionType;
+    if (flowType === FlowType.Expense) actionType = ActionType.AddExpense;
+    if (flowType === FlowType.Income) actionType = ActionType.AddIncome;
+
+    if (actionType) {
+      dispatch({
+        type: actionType,
+        payload: flow
+      });
+    }
+
+    handleDialogClose();
   };
 
   // Change of Date
@@ -157,7 +196,7 @@ export default function AddFlow({ flowType, buttonColor }: Props) {
               required
               autoWidth
             >
-              {categories.map(item => (
+              {categories.sort((a, b) => a > b ? 1 : -1).map(item => (
                 <MenuItem key={item} value={item}>{item}</MenuItem>
               ))}
             </Select>
@@ -191,7 +230,7 @@ export default function AddFlow({ flowType, buttonColor }: Props) {
 
         <DialogActions>
           <Button onClick={handleDialogClose} color="primary">Cancel</Button>
-          <Button onClick={handleDialogClose} color="primary">Add</Button>
+          <Button onClick={handleDialogAdd} color="primary">Add</Button>
         </DialogActions>
       </Dialog>
     </>
