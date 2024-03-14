@@ -1,1 +1,10 @@
-<p>login works!</p>
+<nb-card [nbSpinner]="loading" nbSpinnerStatus="primary">
+  <nb-card-body>
+    <img src="/assets/sloneek.svg" height="32px">
+
+    <input id="email" type="email" nbInput #email (input)="setEmail(email.value)" placeholder="Email">
+    <app-form-field-password (changedPasswordEvent)="setPassword($event)" />
+
+    <button nbButton status="primary" (click)="login()" [disabled]="!canLogin()">Login</button>
+  </nb-card-body>
+</nb-card>
