@@ -6,18 +6,18 @@ import { AppComponent } from './app.component';
 import { NbLayoutModule, NbThemeModule } from '@nebular/theme';
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        // You could use nebular framework
-        NbThemeModule.forRoot(),
-        NbLayoutModule,
-    ],
-    providers: [],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    // You could use nebular framework
+    NbThemeModule.forRoot(),
+    NbLayoutModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
