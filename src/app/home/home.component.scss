@@ -1,0 +1,29 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.cards {
+  display: flex;
+  gap: 1em;
+}
+
+h3 {
+  margin: 0
+}
+
+.overview-card {
+  overflow: auto;
+}
+
+.overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+app-transactions-view-chart {
+  position: sticky;
+  left: 0;
+}

@@ -12,11 +12,21 @@ import {
   NbIconModule,
   NbButtonModule,
   NbSpinnerModule,
+  NbSelectModule,
  } from '@nebular/theme';
+ import {
+  TransactionDatePipe,
+  TransactionCurrencyPipe
+} from './pipes';
 import { FormFieldPasswordComponent } from './login/form-field-password/form-field-password.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { LogoutComponent } from './logout/logout.component';
+import { TransactionsTableComponent } from './home/transactions-table/transactions-table.component';
+import { BalanceComponent } from './home/balance/balance.component';
+import { TransactionsViewTableComponent } from './home/transactions-view-table/transactions-view-table.component';
+import { CategoriesChartComponent } from './home/categories-chart/categories-chart.component';
+import { TransactionsViewChartComponent } from './home/transactions-view-chart/transactions-view-chart.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +34,14 @@ import { LogoutComponent } from './logout/logout.component';
     FormFieldPasswordComponent,
     LoginComponent,
     HomeComponent,
-    LogoutComponent
+    LogoutComponent,
+    TransactionsTableComponent,
+    TransactionDatePipe,
+    TransactionCurrencyPipe,
+    BalanceComponent,
+    TransactionsViewTableComponent,
+    CategoriesChartComponent,
+    TransactionsViewChartComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +54,8 @@ import { LogoutComponent } from './logout/logout.component';
     NbFormFieldModule,
     NbIconModule,
     NbButtonModule,
-    NbSpinnerModule
+    NbSpinnerModule,
+    NbSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

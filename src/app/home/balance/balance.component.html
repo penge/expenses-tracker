@@ -1,0 +1,4 @@
+<span [ngClass]="{
+  positive: balance >= 0,
+  negative: balance < 0
+}">{{balance | transactionCurrency}}</span>

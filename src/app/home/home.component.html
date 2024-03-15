@@ -1,3 +1,72 @@
-<p>home works!</p>
+<header>
+  <h1>Expenses Tracker</h1>
+  <button nbButton status="danger" [routerLink]="['/logout']">Logout</button>
+</header>
 
-<button nbButton status="danger" [routerLink]="['/logout']">Logout</button>
+<div class="cards">
+  <nb-card>
+    <nb-card-header>Year</nb-card-header>
+    <nb-card-body>
+      <nb-select [selected]="selectedYear" #year (selectedChange)="changeSelectedYear(year.selected)">
+        <nb-option *ngFor="let year of years()" [value]="year">{{year}}</nb-option>
+      </nb-select>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card *ngIf="selectedYearBalance">
+    <nb-card-header>Balance</nb-card-header>
+    <nb-card-body>
+      <h3><app-balance [balance]="selectedYearBalance" /></h3>
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<div class="cards" *ngIf="selectedYearTransactionsView">
+  <nb-card class="overview-card">
+    <nb-card-header class="overview-header">
+      <span>Overview</span>
+      <nb-select [selected]="selectedYearTransactionsView.view" #view (selectedChange)="changeSelectedView(view.selected)">
+        <nb-option value="weekly">Weekly</nb-option>
+        <nb-option value="monthly">Monthly</nb-option>
+      </nb-select>
+    </nb-card-header>
+    <nb-card-body>
+      <app-transactions-view-table [transactionsView]="selectedYearTransactionsView" />
+      <app-transactions-view-chart
+        chartDiv="transactions-view-chart"
+        [transactionsView]="selectedYearTransactionsView"
+      />
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<div class="cards" *ngIf="selectedYearTransactions">
+  <nb-card>
+    <nb-card-header>Transactions</nb-card-header>
+    <nb-card-body>
+      <app-transactions-table [transactions]="selectedYearTransactions" />
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<div class="cards" *ngIf="selectedYearIncomeCategories || selectedYearExpenseCategories">
+  <nb-card *ngIf="selectedYearIncomeCategories">
+    <nb-card-header>Incomes by Category</nb-card-header>
+    <nb-card-body>
+      <app-categories-chart
+        chartDiv="incomes-by-category-chart"
+        [categories]="selectedYearIncomeCategories"
+      />
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card *ngIf="selectedYearExpenseCategories">
+    <nb-card-header>Expenses by Category</nb-card-header>
+    <nb-card-body>
+      <app-categories-chart
+        chartDiv="expenses-by-category-chart"
+        [categories]="selectedYearExpenseCategories"
+      />
+    </nb-card-body>
+  </nb-card>
+</div>

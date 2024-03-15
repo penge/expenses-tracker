@@ -1,0 +1,31 @@
+<table>
+  <thead>
+    <tr>
+      <th *ngIf="transactionsView.view === 'weekly'">Week</th>
+      <th *ngIf="transactionsView.view === 'monthly'">Month</th>
+
+      <th *ngFor="let period of transactionsView.data">{{period.period}}</th>
+
+      <th class="total">Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Income</td>
+      <td *ngFor="let period of transactionsView.data">{{period.income | transactionCurrency}}</td>
+      <td class="total">{{transactionsView.totals.income}}</td>
+    </tr>
+
+    <tr>
+      <td>Expense</td>
+      <td *ngFor="let period of transactionsView.data">{{period.expense | transactionCurrency}}</td>
+      <td class="total">{{transactionsView.totals.expense}}</td>
+    </tr>
+
+    <tr>
+      <td>Balance</td>
+      <td *ngFor="let period of transactionsView.data"><app-balance [balance]="period.balance" /></td>
+      <td class="total"><app-balance [balance]="transactionsView.totals.balance" /></td>
+    </tr>
+  </tbody>
+</table>

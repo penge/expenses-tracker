@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Week</th>
+      <th>Category</th>
+      <th>Info</th>
+      <th class="value">Value</th>
+      <th class="balance">Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let transaction of transactions">
+      <td>{{transaction.timestamp | transactionDate}}</td>
+      <td>{{transaction.timestamp | date:'w'}}</td>
+      <td>{{transaction.category}}</td>
+      <td>{{transaction.info}}</td>
+      <td class="value">{{transaction.value | transactionCurrency}}</td>
+      <td class="balance"><app-balance [balance]="transaction.balance" /></td>
+    </tr>
+  </tbody>
+</table>
