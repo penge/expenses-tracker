@@ -1,0 +1,42 @@
+<div class="button-group column">
+  <button nbButton outline size="small" disabled>Manage {{type}} Categories</button>
+  <button nbButton size="large" [status]="addButtonStatus" (click)="openDialog(dialog)">Add {{type}}</button>
+</div>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header>
+      <h4>Add {{type}}</h4>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="input-group">
+        <div class="title">Date:</div>
+        <input nbInput [nbDatepicker]="ngmodel" placeholder="Pick Date" [(ngModel)]="pickedDate">
+        <nb-datepicker #ngmodel></nb-datepicker>
+      </div>
+
+      <div class="input-group">
+        <div class="title">Category:</div>
+        <nb-select [(selected)]="selectedCategory">
+          <nb-option *ngFor="let category of categories" [value]="category">{{category}}</nb-option>
+        </nb-select>
+      </div>
+
+      <div class="input-group">
+        <div class="title">Info:</div>
+        <input nbInput [(ngModel)]="info">
+      </div>
+
+      <div class="input-group">
+        <div class="title">Value:</div>
+        <input nbInput [(ngModel)]="value" type="number">
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <div class="button-group row space-between">
+        <button nbButton (click)="ref.close()">Cancel</button>
+        <button nbButton [status]="addButtonStatus" (click)="addTransaction(ref)" [disabled]="!canAddTransaction()">Add {{type}}</button>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

@@ -1,72 +1,68 @@
 <header>
   <h1>Expenses Tracker</h1>
-  <button nbButton status="danger" [routerLink]="['/logout']">Logout</button>
+  <button nbButton status="danger" [routerLink]="['/logout']" id="logout-button">Logout</button>
 </header>
+
+<div class="cards buttons" *ngIf="incomeCategoryNames || expenseCategoryNames">
+  <app-manage-transactions *ngIf="incomeCategoryNames" type="Income" [categories]="incomeCategoryNames" />
+  <app-manage-transactions *ngIf="expenseCategoryNames" type="Expense" [categories]="expenseCategoryNames" />
+</div>
 
 <div class="cards">
   <nb-card>
     <nb-card-header>Year</nb-card-header>
     <nb-card-body>
-      <nb-select [selected]="selectedYear" #year (selectedChange)="changeSelectedYear(year.selected)">
-        <nb-option *ngFor="let year of years()" [value]="year">{{year}}</nb-option>
+      <nb-select [selected]="selectedYear()" #year (selectedChange)="changeSelectedYear(year.selected)">
+        <nb-option *ngFor="let year of years" [value]="year">{{year}}</nb-option>
       </nb-select>
     </nb-card-body>
   </nb-card>
 
-  <nb-card *ngIf="selectedYearBalance">
+  <nb-card *ngIf="balance">
     <nb-card-header>Balance</nb-card-header>
     <nb-card-body>
-      <h3><app-balance [balance]="selectedYearBalance" /></h3>
+      <h3><app-balance [balance]="balance" /></h3>
     </nb-card-body>
   </nb-card>
 </div>
 
-<div class="cards" *ngIf="selectedYearTransactionsView">
+<div class="cards" *ngIf="transactionsView">
   <nb-card class="overview-card">
     <nb-card-header class="overview-header">
       <span>Overview</span>
-      <nb-select [selected]="selectedYearTransactionsView.view" #view (selectedChange)="changeSelectedView(view.selected)">
+      <nb-select [selected]="transactionsView.view" #view (selectedChange)="changeSelectedView(view.selected)">
         <nb-option value="weekly">Weekly</nb-option>
         <nb-option value="monthly">Monthly</nb-option>
       </nb-select>
     </nb-card-header>
     <nb-card-body>
-      <app-transactions-view-table [transactionsView]="selectedYearTransactionsView" />
-      <app-transactions-view-chart
-        chartDiv="transactions-view-chart"
-        [transactionsView]="selectedYearTransactionsView"
-      />
+      <app-transactions-view-table [transactionsView]="transactionsView" />
+      <app-transactions-view-chart chartDiv="transactions-view-chart" [transactionsView]="transactionsView" />
     </nb-card-body>
   </nb-card>
 </div>
 
-<div class="cards" *ngIf="selectedYearTransactions">
+<div class="cards" *ngIf="incomeCategories || expenseCategories">
+  <nb-card *ngIf="incomeCategories">
+    <nb-card-header>Income by Category</nb-card-header>
+    <nb-card-body>
+      <app-categories-chart chartDiv="income-by-category-chart" [categories]="incomeCategories" />
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card *ngIf="expenseCategories">
+    <nb-card-header>Expense by Category</nb-card-header>
+    <nb-card-body>
+      <app-categories-chart chartDiv="expense-by-category-chart" [categories]="expenseCategories" />
+    </nb-card-body>
+  </nb-card>
+</div>
+
+<div class="cards" *ngIf="transactions">
   <nb-card>
     <nb-card-header>Transactions</nb-card-header>
     <nb-card-body>
-      <app-transactions-table [transactions]="selectedYearTransactions" />
-    </nb-card-body>
-  </nb-card>
-</div>
-
-<div class="cards" *ngIf="selectedYearIncomeCategories || selectedYearExpenseCategories">
-  <nb-card *ngIf="selectedYearIncomeCategories">
-    <nb-card-header>Incomes by Category</nb-card-header>
-    <nb-card-body>
-      <app-categories-chart
-        chartDiv="incomes-by-category-chart"
-        [categories]="selectedYearIncomeCategories"
-      />
-    </nb-card-body>
-  </nb-card>
-
-  <nb-card *ngIf="selectedYearExpenseCategories">
-    <nb-card-header>Expenses by Category</nb-card-header>
-    <nb-card-body>
-      <app-categories-chart
-        chartDiv="expenses-by-category-chart"
-        [categories]="selectedYearExpenseCategories"
-      />
+      <app-transactions-table [transactions]="transactions" />
     </nb-card-body>
   </nb-card>
 </div>

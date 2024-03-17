@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
@@ -13,6 +14,9 @@ import {
   NbButtonModule,
   NbSpinnerModule,
   NbSelectModule,
+  NbDialogModule,
+  NbDatepickerModule,
+  NbToastrModule,
  } from '@nebular/theme';
  import {
   TransactionDatePipe,
@@ -27,6 +31,8 @@ import { BalanceComponent } from './home/balance/balance.component';
 import { TransactionsViewTableComponent } from './home/transactions-view-table/transactions-view-table.component';
 import { CategoriesChartComponent } from './home/categories-chart/categories-chart.component';
 import { TransactionsViewChartComponent } from './home/transactions-view-chart/transactions-view-chart.component';
+import { ManageTransactionsComponent } from './home/manage-transactions/manage-transactions.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -41,7 +47,8 @@ import { TransactionsViewChartComponent } from './home/transactions-view-chart/t
     BalanceComponent,
     TransactionsViewTableComponent,
     CategoriesChartComponent,
-    TransactionsViewChartComponent
+    TransactionsViewChartComponent,
+    ManageTransactionsComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +63,11 @@ import { TransactionsViewChartComponent } from './home/transactions-view-chart/t
     NbButtonModule,
     NbSpinnerModule,
     NbSelectModule,
+    NbDialogModule.forRoot(),
+    NbDatepickerModule.forRoot(),
+    FormsModule,
+    NbToastrModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
