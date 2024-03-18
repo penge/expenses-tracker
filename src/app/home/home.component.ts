@@ -1,6 +1,7 @@
 import { Component, WritableSignal, effect, signal } from '@angular/core';
-import { TransactionsService } from '../api/transactions.service';
 import { Transaction, TransactionsView, View } from '../api/schema';
+import { TransactionsService } from '../api/transactions.service';
+import { UserService } from '../api/user.service';
 
 type Maybe<T> = T | undefined;
 
@@ -25,7 +26,10 @@ export class HomeComponent {
   incomeCategoryNames: Maybe<string[]>;
   expenseCategoryNames: Maybe<string[]>;
 
-  constructor(private transactionsService: TransactionsService) {
+  constructor(
+    private transactionsService: TransactionsService,
+    private userService: UserService,
+  ) {
     transactionsService.getYears().subscribe((years) => {
       this.years = years;
       this.selectedYear.set(years.at(-0) || -1);
@@ -47,11 +51,23 @@ export class HomeComponent {
       this.transactionsService.getCategories(this.selectedYear(), 'Income').subscribe((categories) => {
         this.incomeCategories = categories;
         this.incomeCategoryNames = Object.keys(categories);
+
+        this.userService.getIncomeCategories().subscribe((categories) => {
+          if (categories.length) {
+            this.incomeCategoryNames = categories;
+          }
+        });
       });
 
       this.transactionsService.getCategories(this.selectedYear(), 'Expense').subscribe((categories) => {
         this.expenseCategories = categories;
         this.expenseCategoryNames = Object.keys(categories);
+
+        this.userService.getExpenseCategories().subscribe((categories) => {
+          if (categories.length) {
+            this.expenseCategoryNames = categories;
+          }
+        });
       });
     });
   }

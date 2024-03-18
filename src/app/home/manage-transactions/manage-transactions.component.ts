@@ -2,6 +2,7 @@ import { Component, Input, TemplateRef } from '@angular/core';
 import { NbDialogRef, NbDialogService, NbGlobalPhysicalPosition, NbToastrService } from '@nebular/theme';
 import { Transaction, TransactionType } from 'src/app/api/schema';
 import { TransactionsService } from 'src/app/api/transactions.service';
+import { UserService } from 'src/app/api/user.service';
 import { TransactionCurrencyPipe } from 'src/app/pipes';
 
 @Component({
@@ -19,6 +20,8 @@ export class ManageTransactionsComponent {
   info = '';
   value: number | undefined;
 
+  userCategories: string[] = [];
+
   get addButtonStatus() {
     return this.type === 'Income' ? 'success' : 'danger';
   }
@@ -27,10 +30,20 @@ export class ManageTransactionsComponent {
     private dialogService: NbDialogService,
     private transactionsService: TransactionsService,
     private toastrService: NbToastrService,
-    private transactionCurrencyPipe: TransactionCurrencyPipe
+    private transactionCurrencyPipe: TransactionCurrencyPipe,
+    private userService: UserService
   ) {}
 
-  openDialog(dialog: TemplateRef<any>) {
+  ngOnChanges() {
+    this.userCategories = [...this.categories];
+  }
+
+  openManageCategoriesDialog(dialog: TemplateRef<any>) {
+    this.userCategories = [...this.categories];
+    this.dialogService.open(dialog, { autoFocus: false });
+  }
+
+  openAddTransactionDialog(dialog: TemplateRef<any>) {
     this.pickedDate = new Date();
     this.selectedCategory = this.categories.at(0) || '';
     this.info = '';
@@ -73,6 +86,23 @@ export class ManageTransactionsComponent {
       }
     );
 
+    dialogRef.close();
+  }
+
+  updateUserCategory(index: number, value: string) {
+    this.userCategories[index] = value;
+  }
+
+  removeUserCategory(index: number) {
+    this.userCategories.splice(index, 1);
+  }
+
+  addUserCategory() {
+    this.userCategories.push('');
+  }
+
+  saveUserCategories(dialogRef: NbDialogRef<any>) {
+    this.userService.setCategories(this.type, this.userCategories.filter(Boolean));
     dialogRef.close();
   }
 }

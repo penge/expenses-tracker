@@ -23,9 +23,16 @@ nb-card-body {
 
 .input-group {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   & .title {
     margin-right: 1em;
   }
+}
+
+.input-group.gapped {
+  gap: 1em;
+}
+
+.flex-end {
+  justify-content: flex-end;
 }
