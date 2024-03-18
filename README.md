@@ -1,27 +1,41 @@
-# TestApp
+# Expenses Tracker
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.6.
+_Expenses Tracker_ is a simple application in which user can track his **Incomes** and **Expenses**.
 
-## Development server
+_Expenses Tracker_ is built using Angular, Nebular, and Google Charts.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Features
 
-## Code scaffolding
+- Add Income
+- Add Expense
+- Manage Income Categories
+- Manage Expense Categories
+- Year selection (shows Transactions for the selected Year)
+- Balance (for the selected Year)
+- Weekly and Monthly Overview (for the selected Year)
+  - Table that shows Income, Expense, and Balance over the course of Weeks or Months, and Total (total Income, total Expense, total Balance)
+  - Chart that shows Income and Expense as bars over the course of Weeks or Months, and Balance as line on top of it
+- Income by Category (as Pie chart)
+- Expense by Category (as Pie chart)
+- List of all Transactions (for the selected Year)
+  - Date
+  - Week number
+  - Category
+  - Info
+  - Value
+  - Balance (over the course of current Year)
+- Example 100 Transactions
+- Data stored for the next visit
+  - Transactions
+  - Income Categories
+  - Expense Categories
+- Authentification, Protected routes, Login, Logout
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### User
 
-## Build
+To Login, use the following credentials:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```
+   Email:  test@sloneek.com
+Password:  sloneek
+```
